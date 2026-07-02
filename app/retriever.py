@@ -1,13 +1,9 @@
 import json
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
 
 class SHLRetriever:
 
     def __init__(self):
-
         with open(
             "data/shl_product_catalog_fixed.json",
             "r",
@@ -15,49 +11,43 @@ class SHLRetriever:
         ) as f:
             self.catalog = json.load(f)
 
-        self.documents = []
-
-        for item in self.catalog:
-
-            text = f"""
-            {item.get("name","")}
-            {item.get("description","")}
-            {' '.join(item.get("keys",[]))}
-            {' '.join(item.get("job_levels",[]))}
-            {' '.join(item.get("languages",[]))}
-            """
-
-            self.documents.append(text)
-
-        self.vectorizer = TfidfVectorizer(stop_words="english")
-
-        self.matrix = self.vectorizer.fit_transform(self.documents)
-
         print("Retriever Ready!")
 
     def search(self, query, top_k=5):
 
-        query_vector = self.vectorizer.transform([query])
+        query = query.lower()
 
-        scores = cosine_similarity(query_vector, self.matrix)[0]
+        scored = []
 
-        top = scores.argsort()[::-1][:top_k]
+        for item in self.catalog:
+
+            text = (
+                item.get("name", "")
+                + " "
+                + item.get("description", "")
+                + " "
+                + " ".join(item.get("keys", []))
+            ).lower()
+
+            score = 0
+
+            for word in query.split():
+                if word in text:
+                    score += 1
+
+            scored.append((score, item))
+
+        scored.sort(reverse=True, key=lambda x: x[0])
 
         recommendations = []
 
-        for idx in top:
+        for score, item in scored[:top_k]:
 
-            item = self.catalog[idx]
-
-            recommendations.append(
-                {
-                    "name": item["name"],
-                    "url": item["link"],
-                    "description": item.get("description", ""),
-                    "test_type": item.get("keys", ["Unknown"])[0]
-                    if item.get("keys")
-                    else "Unknown",
-                }
-            )
+            recommendations.append({
+                "name": item["name"],
+                "url": item["link"],
+                "description": item.get("description", ""),
+                "test_type": item.get("keys", ["Unknown"])[0]
+            })
 
         return recommendations
