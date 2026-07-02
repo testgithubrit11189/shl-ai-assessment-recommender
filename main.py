@@ -1,3 +1,9 @@
+import os
+
+print("========== START ==========")
+print("ENV KEY:", os.environ.get("GROQ_API_KEY"))
+print("===========================")
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List

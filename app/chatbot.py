@@ -2,11 +2,24 @@ import os
 from dotenv import load_dotenv
 from groq import Groq
 
+# Load environment variables
 load_dotenv()
 
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
-)
+# Read API key
+api_key = os.environ.get("GROQ_API_KEY")
+
+# Debug
+print("========== CHATBOT ==========")
+print("GROQ_API_KEY FOUND:", api_key is not None)
+print("=============================")
+
+if not api_key:
+    raise RuntimeError(
+        "GROQ_API_KEY is missing! Please set it in Railway Variables."
+    )
+
+# Initialize Groq client
+client = Groq(api_key=api_key)
 
 
 def ask_llm(user_query, recommendations):
@@ -14,16 +27,15 @@ def ask_llm(user_query, recommendations):
     prompt = f"""
 You are an SHL Assessment Recommendation Assistant.
 
-Your job is to recommend ONLY assessments provided below.
+Your task is to recommend ONLY assessments from the provided list.
 
 STRICT RULES:
 
 1. Never invent assessment names.
-2. Never recommend anything outside the provided list.
-3. Explain why each assessment matches the user's hiring needs.
+2. Recommend ONLY from the available assessments.
+3. Explain briefly why each recommendation matches.
 4. Keep the answer under 200 words.
-5. Be professional.
-6. Mention assessment names exactly as given.
+5. Mention assessment names exactly as provided.
 
 User Query:
 {user_query}
@@ -31,7 +43,7 @@ User Query:
 Available Assessments:
 {recommendations}
 
-Return a short recommendation summary.
+Return a concise recommendation.
 """
 
     response = client.chat.completions.create(
@@ -39,7 +51,7 @@ Return a short recommendation summary.
         messages=[
             {
                 "role": "system",
-                "content": "You are an expert SHL assessment recommendation assistant."
+                "content": "You are an expert SHL Assessment Recommendation Assistant."
             },
             {
                 "role": "user",
