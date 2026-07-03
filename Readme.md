@@ -1,5 +1,16 @@
 # 🤖 SHL AI Assessment Recommendation System
 
+
+🚀 **Live Demo:** https://shl-ai-assessment-recommender-production-95a7.up.railway.app/
+
+📄 **API Docs:** https://https://shl-ai-assessment-recommender-production-95a7.up.railway.app/docs
+
+🎥 **Demo Video:** (https://github.com/testgithubrit11189/shl-ai-assessment-recommender/releases/tag/v1.0.0)
+
+---
+
+# 🤖 SHL AI Assessment Recommendation System
+
 An AI-powered conversational recommendation system that helps recruiters identify the most suitable SHL assessments based on hiring requirements.
 
 The application combines Retrieval-Augmented Generation (RAG) with a Large Language Model (LLM) to retrieve relevant assessments from the SHL product catalog and generate grounded recommendations.
