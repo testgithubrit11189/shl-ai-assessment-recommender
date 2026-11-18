@@ -1,10 +1,6 @@
 # 🤖 SHL AI Assessment Recommendation System
 
 
-🚀 **Live Demo:** https://shl-ai-assessment-recommender-production-95a7.up.railway.app/
-
-📄 **API Docs:** https://https://shl-ai-assessment-recommender-production-95a7.up.railway.app/docs
-
 🎥 **Demo Video:** (https://github.com/testgithubrit11189/shl-ai-assessment-recommender/releases/tag/v1.0.0)
 
 ---
