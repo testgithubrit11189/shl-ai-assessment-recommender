@@ -223,24 +223,6 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## 🌐 Deployment
-
-The application is deployed on Railway.
-
-Public API
-
-```
-https://YOUR-RAILWAY-URL
-```
-
-Swagger Documentation
-
-```
-https://YOUR-RAILWAY-URL/docs
-```
-
----
-
 ## 🔮 Future Improvements
 
 - Hybrid Retrieval (BM25 + Dense Retrieval)
